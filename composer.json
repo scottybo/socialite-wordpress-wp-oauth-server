@@ -6,6 +6,7 @@
         "name": "Scott Bowler",
         "email": "scott.bowler@dcsworldwide.net"
     }],
+    "minimum-stability": "stable",
     "require": {
         "php": "^5.6 || ^7.0",
         "socialiteproviders/manager": "~3.0"
