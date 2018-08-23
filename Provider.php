@@ -42,7 +42,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getAccessToken($code)
+    public function getAccessTokenResponse($code)
     {
         $postKey = (version_compare(ClientInterface::VERSION, '6') === 1) ? 'form_params' : 'body';
 
@@ -52,7 +52,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             $postKey => $this->getTokenFields($code),
         ]);
 
-        return json_decode($response->getBody(), true)['access_token'];
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -60,13 +60,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->post(
-            config('services.wordpress_self_hosted.endpoints.me'), [
-            'headers' => [
-                'Authorization' => 'Bearer '.$token,
-            ],
-        ]);
-
+        $response = $this->getHttpClient()->get(config('services.wordpress_self_hosted.endpoints.me').'?access_token='.$token);
         return json_decode($response->getBody()->getContents(), true);
     }
 
